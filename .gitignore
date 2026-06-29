@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.env
+.env.local
+*.log
+.DS_Store
+
+# Downloaded tool binaries — install locally, don't commit.
+*.exe
+tools/cloudflared.exe
