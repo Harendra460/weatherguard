@@ -19,7 +19,14 @@ export default function App() {
           path="/"
           element={
             loading ? (
-              <div className="grid min-h-screen place-items-center text-slate-400">Loading…</div>
+              <div className="grid min-h-screen place-items-center bg-dawn">
+                <div className="flex flex-col items-center gap-4 text-slate-500">
+                  <span className="grid h-12 w-12 animate-drift place-items-center rounded-2xl bg-brand text-2xl shadow-glass">
+                    🌦️
+                  </span>
+                  <p className="text-sm font-medium">Loading…</p>
+                </div>
+              </div>
             ) : isAuthenticated ? (
               <Home onLogout={logout} />
             ) : (

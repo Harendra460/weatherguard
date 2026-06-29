@@ -36,29 +36,31 @@ export function Home({ onLogout }: { onLogout: () => void }) {
 
   return (
     <div className="min-h-screen bg-dawn">
-      {/* Gradient hero header — the brand sky carries across the top. */}
-      <header className="relative overflow-hidden bg-brand text-white">
-        <div className="pointer-events-none absolute inset-0 bg-sun-glow" aria-hidden />
-        <div className="relative mx-auto flex max-w-2xl items-center justify-between px-6 py-6">
-          <div className="flex items-center gap-3">
-            <span className="grid h-10 w-10 place-items-center rounded-xl bg-white/15 text-xl ring-1 ring-white/25 backdrop-blur-sm">
-              🌦️
-            </span>
-            <div>
-              <h1 className="text-lg font-semibold leading-tight">WeatherGuard</h1>
-              <p className="text-xs text-sky-100/90">{me?.user.email}</p>
+      <div className="mx-auto max-w-2xl px-4 py-8 sm:px-6 sm:py-12">
+        {/* Atmospheric hero panel — contained so it reads as an intentional card
+            on the dawn backdrop, not a full-bleed bar abutting the content. */}
+        <div className="relative overflow-hidden rounded-3xl bg-brand px-6 py-5 text-white shadow-glass-lg">
+          <div className="pointer-events-none absolute inset-0 bg-sun-glow" aria-hidden />
+          <div className="relative flex items-center justify-between gap-3">
+            <div className="flex min-w-0 items-center gap-3">
+              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white/15 text-xl ring-1 ring-white/25 backdrop-blur-sm">
+                🌦️
+              </span>
+              <div className="min-w-0">
+                <h1 className="text-lg font-semibold leading-tight">WeatherGuard</h1>
+                <p className="truncate text-xs text-sky-100/90">{me?.user.email}</p>
+              </div>
             </div>
+            <button
+              onClick={onLogout}
+              className="shrink-0 rounded-lg px-3 py-1.5 text-sm font-medium text-sky-50 transition hover:bg-white/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+            >
+              Sign out
+            </button>
           </div>
-          <button
-            onClick={onLogout}
-            className="rounded-lg px-3 py-1.5 text-sm font-medium text-sky-50 transition hover:bg-white/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
-          >
-            Sign out
-          </button>
         </div>
-      </header>
 
-      <main className="mx-auto -mt-6 max-w-2xl px-6 pb-12">
+        <main className="mt-5">
         {loading ? (
           <Card>
             <p className="text-center text-sm text-slate-400">Loading your account…</p>
@@ -155,7 +157,8 @@ export function Home({ onLogout }: { onLogout: () => void }) {
             </Card>
           </div>
         )}
-      </main>
+        </main>
+      </div>
     </div>
   );
 }
