@@ -9,7 +9,10 @@ export interface AppConfig {
   jwt: { secret: string; expiresIn: string };
   adminEmails: string[];
   telegram: { botToken: string; botUsername: string; webhookSecret: string };
-  weather: { openWeatherKey: string; alertCron: string };
+  weather: { openWeatherKey: string; alertCron: string; alertCronEnabled: boolean };
+  // Shared secret an external scheduler (e.g. a Render Cron Job) must present to
+  // trigger an alert cycle via POST /weather/run-cron.
+  cronSecret: string;
 }
 
 export default (): AppConfig => ({
@@ -42,5 +45,9 @@ export default (): AppConfig => ({
   weather: {
     openWeatherKey: process.env.OPENWEATHER_API_KEY ?? '',
     alertCron: process.env.ALERT_CRON ?? '0 7 * * *',
+    // Set false to disable the in-process cron (e.g. on a free host that sleeps);
+    // an external scheduler then drives alerts via POST /weather/run-cron.
+    alertCronEnabled: (process.env.ALERT_CRON_ENABLED ?? 'true') !== 'false',
   },
+  cronSecret: process.env.CRON_SECRET ?? '',
 });

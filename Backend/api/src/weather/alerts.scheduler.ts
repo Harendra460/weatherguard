@@ -24,7 +24,11 @@ export class AlertsScheduler implements OnModuleInit {
   ) {}
 
   onModuleInit(): void {
-    const cronExpr = this.config.get('weather', { infer: true }).alertCron;
+    const { alertCron: cronExpr, alertCronEnabled } = this.config.get('weather', { infer: true });
+    if (!alertCronEnabled) {
+      this.logger.log('In-process alert cron disabled; expecting an external trigger.');
+      return;
+    }
     const job = new CronJob(cronExpr, () => void this.runAlertCycle());
     this.registry.addCronJob('weather-alerts', job as never);
     job.start();
